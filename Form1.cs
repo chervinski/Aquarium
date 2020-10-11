@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace Aquarium
 {
 	public partial class Form1 : Form
 	{
-		public Form1()
+		public Form1(Random random, List<Fish> fish)
 		{
 			InitializeComponent();
-			List<Fish> fish = new List<Fish>();
 			List<Feed> feed = new List<Feed>();
-			Random random = new Random();
 
 			PictureBox back = new PictureBox() {
 				Image = Aquarium.Properties.Resources.aquarium,
@@ -23,16 +21,10 @@ namespace Aquarium
 
 			ContextMenu = new ContextMenu(new MenuItem[] { new MenuItem("Feed", (s, e) => { feed.Add(new Feed(back ,random)); }) } );
 
-			for (int i = 0; i < 2; ++i)
+			foreach (Fish f in fish)
 			{
-				PictureBox picture = new PictureBox() {
-					Image = Aquarium.Properties.Resources.fish,
-					SizeMode = PictureBoxSizeMode.Zoom,
-					Size = new Size(80, 45),
-					BackColor = Color.Transparent
-				};
-				back.Controls.Add(picture);
-				fish.Add(new Fish(picture, random));
+				back.Controls.Add(f.Picture);
+				f.Locate();
 			}
 
 			Pomp pomp = new Pomp(back, random, new Point(ClientSize.Width - 100, ClientSize.Height), new Point(ClientSize.Width, ClientSize.Height));

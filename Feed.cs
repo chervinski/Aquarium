@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Aquarium
 {
-	class Feed : IDisposable
+	public class Feed : IDisposable
 	{
 		private Control back;
 		private Point[] points = new Point[9];
